@@ -11,5 +11,5 @@ public class Bill extends Base{
     @Column(name = "total")
     private Double total;
     @Column(name = "fecha_compra")
-    private LocalDate dateBourchase;
+    private LocalDate datePurchase;
 }
