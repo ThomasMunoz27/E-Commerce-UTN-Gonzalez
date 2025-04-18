@@ -6,7 +6,7 @@ public interface BaseService<E>{
     // Mostrar todas las entidades
     public List<E> findAll() throws Exception;
 
-    // Mpstrar entidad por Id
+    // Mostrar entidad por Id
     public E finById(Long id) throws Exception;
 
     // Crear Entidad
