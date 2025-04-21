@@ -3,22 +3,6 @@ plugins {
 	id 'org.springframework.boot' version '3.4.4'
 	id 'io.spring.dependency-management' version '1.1.7'
 }
-
-group = 'com.ecommerce'
-version = '0.0.1-SNAPSHOT'
-
-java {
-	toolchain {
-		languageVersion = JavaLanguageVersion.of(17)
-	}
-}
-
-configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
-}
-
 repositories {
 	mavenCentral()
 }
@@ -35,9 +19,7 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-	implementation("org.hibernate:hibernate-envers:6.6.13.Final")
-}
 
-tasks.named('test') {
-	useJUnitPlatform()
+	// Cambiar a una versión compatible con Jakarta Persistence
+	implementation 'org.hibernate:hibernate-core:6.0.0.Final'  // Actualiza a la versión 6.x
 }

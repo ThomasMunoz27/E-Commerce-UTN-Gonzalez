@@ -9,7 +9,7 @@ import jakarta.persistence.*;
 public class Prices extends Base {
 
     @Column(name = "precio_compra")
-    private Double pourchasePrice;
+    private Double purchasePrice;
     @Column(name = "precio_venta")
     private Double salePrice;
 

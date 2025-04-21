@@ -13,7 +13,7 @@ public class Discount extends Base {
 
     @Column(name = "nombre")
     private String name;
-    @Column(name = "fehca_desde")
+    @Column(name = "fecha_desde")
     private LocalDate DateFrom;
     @Column(name = "fecha_hasta")
     private LocalDate DateTo;
