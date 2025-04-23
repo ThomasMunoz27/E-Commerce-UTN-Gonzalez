@@ -16,4 +16,8 @@ public class Adress extends Base {
     private Integer number ;
     @Column(name = "codigo_postal")
     private Integer cp;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")  // Aquí es donde se define la clave foránea
+    private User user;
 }
