@@ -17,4 +17,12 @@ public class Details extends Base{
     private String color ;
     @Column(name = "estado")
     private Boolean state;
+
+    @OneToOne
+    @JoinColumn(name = "precio_id")
+    private Prices prices;
+
+    @OneToMany
+    @JoinColumn(name = "imagen_id")
+    private Image image;
 }
