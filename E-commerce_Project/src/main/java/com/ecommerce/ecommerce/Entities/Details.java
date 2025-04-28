@@ -2,6 +2,8 @@ package com.ecommerce.ecommerce.Entities;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 
 @Entity
 @Table(name = "Detalles")
@@ -24,5 +26,5 @@ public class Details extends Base{
 
     @OneToMany
     @JoinColumn(name = "imagen_id")
-    private Image image;
+    private List<Image> images;
 }

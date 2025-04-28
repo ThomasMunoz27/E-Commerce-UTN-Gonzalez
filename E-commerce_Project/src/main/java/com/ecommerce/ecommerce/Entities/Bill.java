@@ -13,7 +13,7 @@ public class Bill extends Base{
     @Column(name = "fecha_compra")
     private LocalDate datePurchase;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "usuario_id")
     private User user;
 

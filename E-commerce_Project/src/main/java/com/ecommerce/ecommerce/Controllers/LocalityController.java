@@ -1,4 +1,4 @@
-/*
+
 package com.ecommerce.ecommerce.Controllers;
 
 import com.ecommerce.ecommerce.Entities.Locality;
@@ -14,4 +14,3 @@ public class LocalityController extends BaseController<Locality>{
         super(localityService);
     }
 }
-*/

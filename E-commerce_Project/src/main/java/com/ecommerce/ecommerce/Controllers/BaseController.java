@@ -26,7 +26,7 @@ public abstract class BaseController<E> {
 
     public ResponseEntity<E> getById(@PathVariable Long id) {
         try {
-            return ResponseEntity.ok(baseService.finById(id));
+            return ResponseEntity.ok(baseService.findById(id));
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }

@@ -7,7 +7,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "Detalle_factura")
-public class BillDetail {
+public class BillDetail extends Base{
 
     @Column(name = "monto")
     private Double amount;
