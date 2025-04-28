@@ -1,40 +1,21 @@
 package com.ecommerce.ecommerce.Services;
 
+import com.ecommerce.ecommerce.Entities.Locality;
 import com.ecommerce.ecommerce.Repositories.LocalityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class LocalityService implements BaseService<LocalityService>{
+public class LocalityService extends BaseService<Locality>{
 
     @Autowired
     private LocalityRepository localityRepository;
 
 
-    @Override
-    public List<LocalityService> findAll() throws Exception {
-        return List.of();
-    }
-
-    @Override
-    public LocalityService finById(Long id) throws Exception {
-        return null;
-    }
-
-    @Override
-    public LocalityService save(LocalityService entity) throws Exception {
-        return null;
-    }
-
-    @Override
-    public LocalityService update(Long id, LocalityService newEntity) throws Exception {
-        return null;
-    }
-
-    @Override
-    public boolean delete(Long id) throws Exception {
-        return false;
+    public LocalityService(JpaRepository<Locality, Long> baseRepository) {
+        super(baseRepository);
     }
 }

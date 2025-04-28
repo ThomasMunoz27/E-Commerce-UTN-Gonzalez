@@ -1,20 +1,69 @@
 package com.ecommerce.ecommerce.Services;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+
 import java.util.List;
+import java.util.Optional;
 
-public interface BaseService<E>{
-    // Mostrar todas las entidades
-    public List<E> findAll() throws Exception;
+public abstract class BaseService<E> {
 
-    // Mostrar entidad por Id
-    public E finById(Long id) throws Exception;
+    protected JpaRepository<E, Long> baseRepository;
 
-    // Crear Entidad
-    public E save(E entity) throws Exception;
+    public BaseService(JpaRepository<E, Long> baseRepository) {
+        this.baseRepository = baseRepository;
+    }
 
-    // Actualizar Entidad
-    public E update(Long id, E newEntity) throws Exception;
+    public List<E> findAll() throws Exception {
+        try {
+            return baseRepository.findAll();
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+    }
 
-    // Eliminar Entidad por Id
-    public boolean delete(Long id) throws Exception;
+    public E findById(Long id) throws Exception {
+        try {
+            Optional<E> entity = baseRepository.findById(id);
+            if (entity.isPresent()) {
+                return entity.get();
+            } else {
+                throw new Exception("Entidad no encontrada");
+            }
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    public E save(E entity) throws Exception {
+        try {
+            return baseRepository.save(entity);
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    public E update(Long id, E entity) throws Exception {
+        try {
+            if (baseRepository.existsById(id)) {
+                return baseRepository.save(entity);
+            } else {
+                throw new Exception("Entidad no encontrada para actualizar");
+            }
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    public boolean delete(Long id) throws Exception {
+        try {
+            if (baseRepository.existsById(id)) {
+                baseRepository.deleteById(id);
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+    }
 }

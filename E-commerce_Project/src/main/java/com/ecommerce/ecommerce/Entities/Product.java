@@ -12,7 +12,9 @@ public class Product extends Base {
 
     @Column(name = "nombre")
     private String name;
-    @Column(name = "categoria")
+
+    @ManyToOne
+    @JoinColumn(name = "categoria_id")
     private Category Category;
     @Column(name = "tipo_producto")
     private ProductType productType;
