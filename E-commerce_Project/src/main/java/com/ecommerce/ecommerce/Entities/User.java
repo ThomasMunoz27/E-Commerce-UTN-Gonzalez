@@ -22,8 +22,13 @@ public class User extends Base {
     private String email;
     @Column(name = "dni")
     private String dni;
+    //FALTA USER ENUM
+    @ManyToOne
+    @JoinColumn(name = "direccion_id")
+    private Adress adress;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Adress> addresses = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "talla_id")
+    private Size size;
 
 }

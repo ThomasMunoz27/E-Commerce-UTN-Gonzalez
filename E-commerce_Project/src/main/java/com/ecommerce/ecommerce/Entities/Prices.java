@@ -13,4 +13,8 @@ public class Prices extends Base {
     @Column(name = "precio_venta")
     private Double salePrice;
 
+    @OneToMany
+    @JoinColumn(name = "descuento_id")
+    private Discount discount;
+
 }

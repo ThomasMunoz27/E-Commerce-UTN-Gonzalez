@@ -12,4 +12,10 @@ public class Bill extends Base{
     private Double total;
     @Column(name = "fecha_compra")
     private LocalDate datePurchase;
+
+    @OneToMany
+    @JoinColumn(name = "usuario_id")
+    private User user;
+
+
 }
