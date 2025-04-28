@@ -2,6 +2,8 @@ package com.ecommerce.ecommerce.Entities;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 
 @Entity
 @Table(name = "Detalles")
@@ -17,4 +19,12 @@ public class Details extends Base{
     private String color ;
     @Column(name = "estado")
     private Boolean state;
+
+    @OneToOne
+    @JoinColumn(name = "precio_id")
+    private Prices prices;
+
+    @OneToMany
+    @JoinColumn(name = "imagen_id")
+    private List<Image> images;
 }
