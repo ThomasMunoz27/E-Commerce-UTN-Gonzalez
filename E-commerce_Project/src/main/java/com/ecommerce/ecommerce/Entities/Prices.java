@@ -1,11 +1,14 @@
 package com.ecommerce.ecommerce.Entities;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 
 @Entity
 @Table(name = "Precios")
-
+@Setter
+@Getter
 public class Prices extends Base {
 
     @Column(name = "precio_compra")

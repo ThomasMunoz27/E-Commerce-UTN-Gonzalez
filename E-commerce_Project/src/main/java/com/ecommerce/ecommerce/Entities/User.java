@@ -2,6 +2,8 @@ package com.ecommerce.ecommerce.Entities;
 
 import com.ecommerce.ecommerce.Entities.enums.Rol;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +11,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "Usuarios")
-
+@Setter
+@Getter
 public class User extends Base {
 
     @Column(name = "nombre")

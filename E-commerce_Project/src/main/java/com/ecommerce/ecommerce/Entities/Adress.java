@@ -1,12 +1,16 @@
 package com.ecommerce.ecommerce.Entities;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 
 // Agregar @GetMapping()
 
 @Entity
 @Table(name = "Direccion")
+@Setter
+@Getter
 
 public class Adress extends Base {
 

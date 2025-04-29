@@ -2,11 +2,14 @@ package com.ecommerce.ecommerce.Entities;
 
 import com.ecommerce.ecommerce.Entities.enums.ProductType;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 
 @Entity
 @Table(name = "Productos")
-
+@Setter
+@Getter
 
 public class Product extends Base {
 
