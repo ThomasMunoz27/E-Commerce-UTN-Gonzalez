@@ -50,11 +50,13 @@ public abstract class BaseController<E> {
     @PutMapping("/{id}")
     public ResponseEntity<E> update(@PathVariable Long id, @RequestBody E entity) {
         try {
-            E entityUpdated = baseService.update(id, entity);
+            E entityFind = baseService.findById(id);
+            System.out.println(entityFind);
+            E entityUpdated = baseService.update(id, entityFind);
             if (entityUpdated == null) {
                 return ResponseEntity.notFound().build();
             }
-            return ResponseEntity.ok(entityUpdated);
+            return ResponseEntity.ok(baseService.update(id, entity));
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
