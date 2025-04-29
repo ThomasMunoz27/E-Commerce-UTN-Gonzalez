@@ -17,25 +17,31 @@ public abstract class BaseController<E> {
     @GetMapping
     public ResponseEntity<List<E>> getAll() {
         try {
-            return ResponseEntity.ok(baseService.findAll());
+            List<E> entities = baseService.findAll();
+            return ResponseEntity.ok(entities);
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
     }
 
-
+    @GetMapping("/{id}")
     public ResponseEntity<E> getById(@PathVariable Long id) {
         try {
-            return ResponseEntity.ok(baseService.findById(id));
-        } catch (Exception e) {
+            E entity = baseService.findById(id);
+            if (entity != null) {
+                return ResponseEntity.ok(entity);
+            }
             return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
         }
     }
 
     @PostMapping
     public ResponseEntity<E> create(@RequestBody E entity) {
         try {
-            return ResponseEntity.ok(baseService.save(entity));
+            E newEntity = baseService.save(entity);
+            return ResponseEntity.status(201).body(newEntity);
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
@@ -44,7 +50,11 @@ public abstract class BaseController<E> {
     @PutMapping("/{id}")
     public ResponseEntity<E> update(@PathVariable Long id, @RequestBody E entity) {
         try {
-            return ResponseEntity.ok(baseService.update(id, entity));
+            E entityUpdated = baseService.update(id, entity);
+            if (entityUpdated == null) {
+                return ResponseEntity.notFound().build();
+            }
+            return ResponseEntity.ok(entityUpdated);
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }

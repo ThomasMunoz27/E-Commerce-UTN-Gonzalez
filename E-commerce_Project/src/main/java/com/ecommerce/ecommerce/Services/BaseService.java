@@ -1,5 +1,6 @@
 package com.ecommerce.ecommerce.Services;
 
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -13,6 +14,7 @@ public abstract class BaseService<E> {
         this.baseRepository = baseRepository;
     }
 
+    @Transactional
     public List<E> findAll() throws Exception {
         try {
             return baseRepository.findAll();
@@ -21,6 +23,7 @@ public abstract class BaseService<E> {
         }
     }
 
+    @Transactional
     public E findById(Long id) throws Exception {
         try {
             Optional<E> entity = baseRepository.findById(id);
@@ -34,6 +37,7 @@ public abstract class BaseService<E> {
         }
     }
 
+    @Transactional
     public E save(E entity) throws Exception {
         try {
             return baseRepository.save(entity);
@@ -42,6 +46,7 @@ public abstract class BaseService<E> {
         }
     }
 
+    @Transactional
     public E update(Long id, E entity) throws Exception {
         try {
             if (baseRepository.existsById(id)) {
@@ -54,6 +59,7 @@ public abstract class BaseService<E> {
         }
     }
 
+    @Transactional
     public boolean delete(Long id) throws Exception {
         try {
             if (baseRepository.existsById(id)) {
