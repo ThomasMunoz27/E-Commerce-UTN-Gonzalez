@@ -13,4 +13,7 @@ public class SizeController extends BaseController<Size> {
     public SizeController(SizeService sizeService) {
         super(sizeService);
     }
+
+
+
 }

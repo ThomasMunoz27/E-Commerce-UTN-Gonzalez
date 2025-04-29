@@ -17,4 +17,8 @@ public class UserService extends BaseService<User>{
     public UserService(JpaRepository<User, Long> baseRepository) {
         super(baseRepository);
     }
+
+    public List<User> findByName(String userName){
+        return userRepository.findByName(userName);
+    }
 }
