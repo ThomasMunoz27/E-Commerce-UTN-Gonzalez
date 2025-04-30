@@ -23,4 +23,9 @@ public class Product extends Base {
     private ProductType productType;
     @Column(name = "sexo")
     private String sex;
+
+    @OneToOne
+    @Column(name = "precio")
+    private Prices prices;
+
 }
