@@ -12,7 +12,7 @@ import java.util.Date;
 @Component
 public class JwtUtil {
 
-    private static final String SECRET = "claveSuperSecreta123";
+    private static final String SECRET = "mi3super3clave3secreta3segura31234567890123456";
 
     public String generateToken(String username) {
         return Jwts.builder()
