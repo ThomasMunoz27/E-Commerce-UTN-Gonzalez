@@ -25,7 +25,7 @@ public class Product extends Base {
     private String sex;
 
     @OneToOne
-    @Column(name = "precio")
+    @JoinColumn(name = "precio_id")
     private Prices prices;
 
 }
