@@ -38,4 +38,25 @@ public class User extends Base {
     @JoinColumn(name = "talla_id")
     private Size size;
 
+
+    // Getter para 'name'
+    public String getName() {
+        return name;
+    }
+
+    // Setter para 'name'
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    // Getter para 'password'
+    public String getPassword() {
+        return password;
+    }
+
+    // Setter para 'password'
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
 }
