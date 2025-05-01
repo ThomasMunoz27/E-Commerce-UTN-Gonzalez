@@ -8,9 +8,9 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "Talla")
+@Setter
+@Getter
 public class Size extends Base{
-    @Setter
-    @Getter
     @Column(name = "talla")
     private String size;
 }
