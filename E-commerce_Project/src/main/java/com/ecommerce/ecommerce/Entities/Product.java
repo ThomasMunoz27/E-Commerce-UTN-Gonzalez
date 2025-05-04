@@ -28,7 +28,7 @@ public class Product extends Base {
     @JoinColumn(name = "precio_id")
     private Prices prices;
 
-    @OneToMany
+    @OneToOne
     @JoinColumn(name = "imagen_id")
     private Image image;
 
