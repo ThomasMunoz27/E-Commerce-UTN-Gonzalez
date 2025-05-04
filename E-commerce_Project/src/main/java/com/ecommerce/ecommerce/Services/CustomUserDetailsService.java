@@ -29,6 +29,6 @@ public class CustomUserDetailsService implements UserDetailsService {
                 usuario.getName(),
                 usuario.getPassword(),
                 new ArrayList<>() // Aquí podés agregar roles si los tenés
-        );
-    }
+            );
+        }
 }
