@@ -26,6 +26,10 @@ public class User extends Base {
     @Column(name = "dni")
     private String dni;
     //FALTA USER ENUM
+
+    @Column(name= "rol")
+    private Rol rol;
+
     @ManyToOne
     @JoinColumn(name = "direccion_id")
     private Adress adress;

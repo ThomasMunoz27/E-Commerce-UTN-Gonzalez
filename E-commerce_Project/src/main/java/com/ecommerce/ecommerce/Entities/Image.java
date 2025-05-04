@@ -14,4 +14,6 @@ public class Image extends Base {
 
     @Column(name = "url")
     private String url;
+
+
 }
