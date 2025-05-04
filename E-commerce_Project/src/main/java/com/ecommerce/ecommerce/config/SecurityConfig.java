@@ -37,11 +37,14 @@ public class SecurityConfig {
         return http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/login").permitAll()
-                        .anyRequest().authenticated()
-                )
+                        .anyRequest().permitAll())
+//               .authorizeHttpRequests(auth -> auth
+//                        .requestMatchers("/auth/login").permitAll()  ESTE ES EL FILTRO PARA LA AUTENTICACION, LO COMENTO MIENTRAS.
+//                        .anyRequest().authenticated()
+//                )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())
+                // Comenté momentaneamente el filtro JWT para que no nos moleste durante el desarollo
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
