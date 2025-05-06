@@ -32,5 +32,4 @@ public class Product extends Base {
     @JoinColumn(name = "imagen_id")
     private Image image;
 
-
 }
