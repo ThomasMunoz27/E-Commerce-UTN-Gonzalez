@@ -25,7 +25,7 @@ public class Details extends Base{
 
     @OneToOne
     @JoinColumn(name = "precio_id")
-    private Prices prices;
+    private Prices price;
 
     @OneToMany
     @JoinColumn(name = "imagen_id")
