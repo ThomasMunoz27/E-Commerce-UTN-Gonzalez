@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 
 @Entity
 @Table(name = "Productos")
@@ -31,5 +33,13 @@ public class Product extends Base {
     @OneToOne
     @JoinColumn(name = "imagen_id")
     private Image image;
+
+    @ManyToMany
+    @JoinTable(
+            name = "producto_talle",
+            joinColumns = @JoinColumn(name = "id_producto"),
+            inverseJoinColumns = @JoinColumn(name = "id_talle")
+    )
+    private List<Size> sizes;
 
 }
