@@ -4,6 +4,7 @@ import com.ecommerce.ecommerce.Entities.Category;
 import com.ecommerce.ecommerce.Entities.User;
 import com.ecommerce.ecommerce.Repositories.CategoryRepository;
 import com.ecommerce.ecommerce.Services.CategoryService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,7 +24,12 @@ public class CategoryController extends BaseController<Category> {
     }
 
     @GetMapping("/search")
-    public List<Category> searchByName(@RequestParam String name) {
-        return categoryService.findCategoryByName(name); // No es estático
+    public ResponseEntity<Category> searchByName(@RequestParam String name) {
+        Category category = categoryService.findCategoryByName(name);
+        if (category != null) {
+            return ResponseEntity.ok(category);
+        }else{
+            return    ResponseEntity.notFound().build();
+        }
     }
 }

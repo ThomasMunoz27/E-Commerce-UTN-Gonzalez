@@ -6,5 +6,5 @@ import java.util.List;
 
 @Repository
 public interface CategoryRepository extends BaseRepository<Category, Long>{
-    List<Category> findByName(String name);
+    Category findByName(String name);
 }

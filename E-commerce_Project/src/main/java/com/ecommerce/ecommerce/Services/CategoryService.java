@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 
 @Service
 public class CategoryService extends BaseService<Category>{
@@ -18,7 +17,7 @@ public class CategoryService extends BaseService<Category>{
     public CategoryService(JpaRepository<Category, Long> baseRepository) {
         super(baseRepository);
     }
-    public  List<Category> findCategoryByName(String name){
+    public Category findCategoryByName(String name){
         return categoryRepository.findByName(name);
     }
 }
