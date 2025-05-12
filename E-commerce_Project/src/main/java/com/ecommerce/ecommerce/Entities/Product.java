@@ -42,4 +42,12 @@ public class Product extends Base {
     )
     private List<Size> sizes;
 
+    @ManyToMany
+    @JoinTable(
+            name = "producto_color",
+            joinColumns = @JoinColumn(name = "id_producto"),
+            inverseJoinColumns = @JoinColumn(name = "id_color")
+    )
+    private List<Color> colors;
+
 }
