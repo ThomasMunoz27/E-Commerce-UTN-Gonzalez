@@ -51,6 +51,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -87,6 +88,7 @@
   &quot;keyToString&quot;: {
     &quot;Application.EcommerceApplication (1).executor&quot;: &quot;Run&quot;,
     &quot;Application.EcommerceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Build E-commerce_Project.executor&quot;: &quot;Run&quot;,
     &quot;Gradle.E-commerce_Project [:com.ecommerce.ecommerce.EcommerceApplication.main()].executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
