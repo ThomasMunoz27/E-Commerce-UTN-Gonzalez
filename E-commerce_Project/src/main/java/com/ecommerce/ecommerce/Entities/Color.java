@@ -14,6 +14,6 @@ import lombok.Setter;
 @Setter
 public class Color extends Base{
 
-    @Column(name = "nombre")
-    private String name;
+    @Column(name = "valor")
+    private String value;
 }
