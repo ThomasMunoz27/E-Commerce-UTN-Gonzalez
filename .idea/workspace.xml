@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b90b4eb1-3528-4ad2-8c03-e6f95439b827" name="Changes" comment="mergin">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -51,7 +50,6 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -88,7 +86,6 @@
   &quot;keyToString&quot;: {
     &quot;Application.EcommerceApplication (1).executor&quot;: &quot;Run&quot;,
     &quot;Application.EcommerceApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Build E-commerce_Project.executor&quot;: &quot;Run&quot;,
     &quot;Gradle.E-commerce_Project [:com.ecommerce.ecommerce.EcommerceApplication.main()].executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
@@ -204,7 +201,15 @@
       <option name="project" value="LOCAL" />
       <updated>1746987771061</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="mergin">
+      <option name="closed" value="true" />
+      <created>1747180160255</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1747180160255</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
