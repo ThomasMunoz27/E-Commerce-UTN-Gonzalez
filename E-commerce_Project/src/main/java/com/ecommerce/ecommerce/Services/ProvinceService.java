@@ -18,4 +18,8 @@ public class ProvinceService extends BaseService<Province>{
     public ProvinceService(JpaRepository<Province, Long> baseRepository) {
         super(baseRepository);
     }
+
+    public List<Province> getProvincesByCountryId(Long countryId){
+        return provinceRepository.findByCountryId(countryId);
+    }
 }
