@@ -1,6 +1,6 @@
 package com.ecommerce.ecommerce.payload;
 
-public class AuthResponse {
+public class  AuthResponse {
     private String token;
 
     public AuthResponse(String token) {
