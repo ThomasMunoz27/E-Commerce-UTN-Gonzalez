@@ -1,9 +1,7 @@
 package com.ecommerce.ecommerce.Entities;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,6 +11,20 @@ import lombok.Setter;
 @Getter
 public class BillDetail extends Base{
 
-    @Column(name = "monto")
-    private Double amount;
+    @ManyToOne
+    @JoinColumn(name = "producto_id")
+    private Product product;
+
+    @Column(name = "cantidad")
+    private Integer quantity;
+
+    @Column(name = "precio_unitario")
+    private Double unitPrice;
+
+    @Column(name = "subtotal")
+    private Double subtotal;
+
+    @ManyToOne
+    @JoinColumn(name = "factura_id")
+    private Bill bill;
 }

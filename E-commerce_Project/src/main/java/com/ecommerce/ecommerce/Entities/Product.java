@@ -50,4 +50,9 @@ public class Product extends Base {
     )
     private List<Color> colors;
 
+    @Column(name = "stock")
+    private  Integer stock;
+
+    @Column(name = "descripcion")
+    private String description;
 }
