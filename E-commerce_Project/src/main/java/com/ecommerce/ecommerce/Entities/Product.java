@@ -40,7 +40,7 @@ public class Product extends Base {
             joinColumns = @JoinColumn(name = "id_producto"),
             inverseJoinColumns = @JoinColumn(name = "id_talle")
     )
-    private List<Size> sizes;
+    private List<Size> sizes; 
 
     @ManyToMany
     @JoinTable(

@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 
-// Agregar @GetMapping()
+
 
 @Entity
 @Table(name = "Direccion")
