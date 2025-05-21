@@ -37,17 +37,16 @@ public class SecurityConfig {
         return http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .anyRequest().permitAll())
-//               .authorizeHttpRequests(auth -> auth
-//                        .requestMatchers("/auth/login").permitAll()  ESTE ES EL FILTRO PARA LA AUTENTICACION, LO COMENTO MIENTRAS.
-//                        .anyRequest().authenticated()
-//                )
+                        .requestMatchers("/auth/login").permitAll() // Solo permite login sin token
+                        .anyRequest().permitAll() // El resto necesita JWT
+                )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())
-                // Comenté momentaneamente el filtro JWT para que no nos moleste durante el desarollo
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
+
+
 
     @Bean
     public AuthenticationProvider authenticationProvider() {

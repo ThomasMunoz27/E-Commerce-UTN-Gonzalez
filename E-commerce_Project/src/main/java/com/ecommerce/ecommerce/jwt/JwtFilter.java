@@ -15,7 +15,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-
 @Component
 public class JwtFilter extends OncePerRequestFilter {
 
@@ -29,6 +28,14 @@ public class JwtFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
 
+        // ⛔ Excluir ruta de login para que no se requiera token
+        String path = request.getRequestURI();
+        if (path.equals("/auth/login")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+        // ✅ Verificación del token
         String header = request.getHeader("Authorization");
         if (header != null && header.startsWith("Bearer ")) {
             String token = header.substring(7);
