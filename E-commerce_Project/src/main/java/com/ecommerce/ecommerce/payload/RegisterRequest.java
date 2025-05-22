@@ -1,40 +1,18 @@
-package com.ecommerce.ecommerce.Entities;
+package com.ecommerce.ecommerce.payload;
+
 
 import com.ecommerce.ecommerce.Entities.enums.Rol;
-import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.List;
-
-
-@Entity
-@Table(name = "Usuarios")
-@Setter
-@Getter
-public class User extends Base {
-
-    @Column(name = "nombre")
-    private String name ;
-    @Column(name = "constraseña")
+public class RegisterRequest {
+    private String name;
     private String password;
-    @Column(name = "usuario")
-    private Rol user;
-    @Column(name = "email")
+    private Rol user;     // Podrías renombrar a `rol` para más claridad
     private String email;
-    @Column(name = "dni")
     private String dni;
+    private Long adressId;
+    private Long sizeId;
 
-
-    @ManyToOne
-    @JoinColumn(name = "direccion_id")
-    private Adress adress;
-
-    @ManyToOne
-    @JoinColumn(name = "talla_id")
-    private Size size;
-
+    // Getters y Setters
 
     public String getName() {
         return name;
@@ -76,18 +54,15 @@ public class User extends Base {
         this.dni = dni;
     }
 
-    public Adress getAdress() {
-        return adress;
+    public Long getAdressId() {
+        return adressId;
     }
 
-    public void setAdress(Adress adress) {
-        this.adress = adress;
+    public Long getSizeId(){
+        return sizeId;
     }
 
-    public Size getSize() {
-        return size;
+    public void setAdressId(Long adressId) {
+        this.adressId = adressId;
     }
-
-
-
 }

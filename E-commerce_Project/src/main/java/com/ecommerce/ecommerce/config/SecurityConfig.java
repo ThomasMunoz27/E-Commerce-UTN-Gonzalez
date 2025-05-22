@@ -60,10 +60,9 @@ public class SecurityConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
-
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return NoOpPasswordEncoder.getInstance(); // ⚠️ Solo para desarrollo luego cambiarlo a BCrypt si dios quiere
+        return new BCryptPasswordEncoder();
     }
 }
 
