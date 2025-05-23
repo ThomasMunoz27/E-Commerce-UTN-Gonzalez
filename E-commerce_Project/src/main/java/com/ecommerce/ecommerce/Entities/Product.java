@@ -56,6 +56,11 @@ public class Product extends Base {
     @Column(name = "descripcion")
     private String description;
 
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
+
     @Column(name = "activo")
-    private Boolean active =true;
+    private Boolean active = true;
 }

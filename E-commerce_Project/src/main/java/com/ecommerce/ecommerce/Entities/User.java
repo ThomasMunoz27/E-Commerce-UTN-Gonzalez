@@ -91,6 +91,9 @@ public class User extends Base {
         return size;
     }
 
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
 
 
 }

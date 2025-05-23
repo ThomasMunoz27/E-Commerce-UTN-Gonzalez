@@ -50,4 +50,6 @@ public class ProductService extends BaseService<Product>{
     public Page<Product> findAllPaged(Pageable pageable) {
         return productRepository.findAll(pageable);
     }
+
+
 }
