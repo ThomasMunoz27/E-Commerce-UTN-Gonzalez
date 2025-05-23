@@ -7,12 +7,14 @@ import com.ecommerce.ecommerce.Repositories.AdressRepository;
 import com.ecommerce.ecommerce.Repositories.SizeRepository;
 import com.ecommerce.ecommerce.Repositories.UserRepository;
 import com.ecommerce.ecommerce.payload.RegisterRequest;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService extends BaseService<User>{
@@ -55,4 +57,28 @@ public class UserService extends BaseService<User>{
         userRepository.save(user);
     }
 
+    @Override
+    @Transactional
+    public boolean delete(Long id) throws Exception{
+        try{
+            Optional<User> optional = userRepository.findById(id);
+            if (optional.isPresent()){
+                User user = optional.get();
+                user.setActive(false);
+                userRepository.save(user);
+                return true;
+            }
+            return false;
+        }catch (Exception e){
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    public List<User> findAllActive() throws Exception{
+        try{
+            return userRepository.findAllActive();
+        }catch (Exception e){
+            throw new Exception(e.getMessage());
+        }
+    }
 }

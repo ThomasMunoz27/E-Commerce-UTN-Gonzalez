@@ -35,6 +35,9 @@ public class User extends Base {
     @JoinColumn(name = "talla_id")
     private Size size;
 
+    @Column(name = "activo")
+    private boolean active = true;
+
 
     public String getName() {
         return name;

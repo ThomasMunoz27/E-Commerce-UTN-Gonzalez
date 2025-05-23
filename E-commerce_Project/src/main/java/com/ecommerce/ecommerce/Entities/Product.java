@@ -55,4 +55,7 @@ public class Product extends Base {
 
     @Column(name = "descripcion")
     private String description;
+
+    @Column(name = "activo")
+    private boolean active =true;
 }
