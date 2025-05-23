@@ -37,7 +37,7 @@ public class MercadoPagoController {
             PreferenceBackUrlsRequest backUrls =
 
                     PreferenceBackUrlsRequest.builder()
-                            .success("https://www.seu-site/success")
+                            .success("https://www.adidas.com.ar/")
                             .pending("https://www.seu-site/pending")
                             .failure("https://www.seu-site/failure")
                             .build();
