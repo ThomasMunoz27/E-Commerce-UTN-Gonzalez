@@ -36,7 +36,7 @@ public class User extends Base {
     private Size size;
 
     @Column(name = "activo")
-    private boolean active = true;
+    private Boolean active = true;
 
 
     public String getName() {
