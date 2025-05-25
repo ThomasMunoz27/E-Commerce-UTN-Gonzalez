@@ -33,11 +33,18 @@ public class ProductController extends BaseController<Product> {
     public Page<Product> getPagedProducts(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
+            @RequestParam(required = false) Long categoryId,
             @RequestParam(defaultValue = "id") String sortBy
     ) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy).ascending());
-        return productService.findAllPaged(pageable);
+
+        if (categoryId == null) {
+            return productService.findAllPaged(pageable); // sin filtro
+        } else {
+            return productService.findPagedAndFiltered(categoryId, pageable); // con filtro
+        }
     }
+
 
     @GetMapping("/filter")
     public List<Product> getFiltredProducts(
