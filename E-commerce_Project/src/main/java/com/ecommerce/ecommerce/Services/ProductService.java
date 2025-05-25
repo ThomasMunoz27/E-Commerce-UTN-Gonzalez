@@ -51,5 +51,7 @@ public class ProductService extends BaseService<Product>{
         return productRepository.findAll(pageable);
     }
 
-
+    public List<Product> buscarPorCategoria(String categoria){
+        return productRepository.findAllByCategoria(categoria);
+    }
 }

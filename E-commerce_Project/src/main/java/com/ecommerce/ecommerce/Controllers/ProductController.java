@@ -1,7 +1,6 @@
 package com.ecommerce.ecommerce.Controllers;
 
 import com.ecommerce.ecommerce.Entities.Product;
-import com.ecommerce.ecommerce.Services.BaseService;
 import com.ecommerce.ecommerce.Services.ProductService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -39,4 +38,12 @@ public class ProductController extends BaseController<Product> {
         Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy).ascending());
         return productService.findAllPaged(pageable);
     }
+
+    @GetMapping("/filter")
+    public List<Product> getFiltredProducts(
+            @RequestParam(required = false) String categoria
+    ){
+        return productService.buscarPorCategoria(categoria);
+    }
+
 }
