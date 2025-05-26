@@ -39,7 +39,7 @@ public class MercadoPagoController {
                     PreferenceBackUrlsRequest.builder()
                             .success("https://www.adidas.com.ar/")
                             .pending("https://www.seu-site/pending")
-                            .failure("https://www.seu-site/failure")
+                            .failure("https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley")
                             .build();
 
 
@@ -58,7 +58,7 @@ public class MercadoPagoController {
                         .pictureUrl(cartItem.getImageUrl())
                         .quantity(cartItem.getQuantity())
                         .unitPrice(BigDecimal.valueOf(cartItem.getPrice()).setScale(2, RoundingMode.HALF_UP))
-                        //.categoryId(cartItem.getCategory()) // comentá esta línea por ahora
+                        .categoryId(cartItem.getCategory()) // comentá esta línea por ahora
                         .currencyId("ARS")
                         .build();
                 items.add(itemRequest);

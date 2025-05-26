@@ -29,4 +29,9 @@ public class UserController extends BaseController<User>{
     public ResponseEntity<List<User>> getAllActive() throws Exception{
         return ResponseEntity.ok(userService.findAllActive());
     }
+
+    @GetMapping("/active")
+    public ResponseEntity<List<User>> getAllActives() throws Exception{
+        return ResponseEntity.ok(userService.findAllActive());
+    }
 }
