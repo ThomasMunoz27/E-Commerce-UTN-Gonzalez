@@ -44,25 +44,65 @@ public class User extends Base {
     @JoinColumn(name = "talla_id")
     private Size size;
 
+    @Column(name = "activo")
+    private Boolean active = true;
 
-    // Getter para 'name'
+
     public String getName() {
         return name;
     }
 
-    // Setter para 'name'
     public void setName(String name) {
         this.name = name;
     }
 
-    // Getter para 'password'
     public String getPassword() {
         return password;
     }
 
-    // Setter para 'password'
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public Rol getUser() {
+        return user;
+    }
+
+    public void setUser(Rol user) {
+        this.user = user;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getDni() {
+        return dni;
+    }
+
+    public void setDni(String dni) {
+        this.dni = dni;
+    }
+
+    public Adress getAdress() {
+        return adress;
+    }
+
+    public void setAdress(Adress adress) {
+        this.adress = adress;
+    }
+
+    public Size getSize() {
+        return size;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
 
 }

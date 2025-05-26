@@ -3,10 +3,7 @@ package com.ecommerce.ecommerce.Controllers;
 
 import com.ecommerce.ecommerce.MpDTO.CartItemDTO;
 
-import com.mercadopago.client.preference.PreferenceClient;
-import com.mercadopago.client.preference.PreferenceItemRequest;
-import com.mercadopago.client.preference.PreferencePayerRequest;
-import com.mercadopago.client.preference.PreferenceRequest;
+import com.mercadopago.client.preference.*;
 import com.mercadopago.exceptions.MPApiException;
 import com.mercadopago.net.MPResponse;
 import com.mercadopago.resources.preference.Preference;
@@ -37,6 +34,16 @@ public class MercadoPagoController {
             com.mercadopago.MercadoPagoConfig.setAccessToken(accesToken);
             System.out.println("Token Mercado Pago: " + accesToken);
 
+            PreferenceBackUrlsRequest backUrls =
+
+                    PreferenceBackUrlsRequest.builder()
+                            .success("https://www.seu-site/success")
+                            .pending("https://www.seu-site/pending")
+                            .failure("https://www.seu-site/failure")
+                            .build();
+
+
+
             PreferencePayerRequest payer = PreferencePayerRequest.builder()
                     .email("test_user_169965231@testuser.com")
                     .build();
@@ -46,6 +53,7 @@ public class MercadoPagoController {
             for (CartItemDTO cartItem : cartItems){
                 System.out.println("Procesando producto: " + cartItem.getName());
                 PreferenceItemRequest itemRequest = PreferenceItemRequest.builder()
+                        .id(String.valueOf(cartItem.getId()))
                         .title(cartItem.getName())
                         .pictureUrl(cartItem.getImageUrl())
                         .quantity(cartItem.getQuantity())
@@ -56,17 +64,35 @@ public class MercadoPagoController {
                 items.add(itemRequest);
             }
 
+            List<PreferencePaymentTypeRequest> excludedPaymentTypes = new ArrayList<>();
+            excludedPaymentTypes.add(PreferencePaymentTypeRequest.builder().id("ticket").build());
+
+            PreferencePaymentMethodsRequest paymentMethods = PreferencePaymentMethodsRequest.builder()
+                    .excludedPaymentTypes(excludedPaymentTypes)
+                    .installments(1)
+                    .build();
+
             PreferenceRequest preferenceRequest = PreferenceRequest.builder()
                     .items(items)
-                    .payer(payer)
+                    //.payer(payer)
+                    .backUrls(backUrls)
+                    .paymentMethods(paymentMethods)
+                    .autoReturn("approved")
                     .build();
 
             PreferenceClient client = new PreferenceClient();
             Preference preference = client.create(preferenceRequest);
 
+
+            String prefId = preference.getId();
+
             System.out.println("URL de pago: " + preference.getInitPoint());
 
-            return ResponseEntity.ok(preference.getInitPoint());
+            return ResponseEntity.status(HttpStatus.OK).body("{\"preferenceId\":\""+prefId+"\"}");
+
+
+
+            //return ResponseEntity.ok(preference.getSandboxInitPoint());
         }catch (MPApiException mpEx){
 
             MPResponse response = mpEx.getApiResponse();
