@@ -20,7 +20,7 @@ public class Product extends Base {
 
     @ManyToOne
     @JoinColumn(name = "categoria_id")
-    private Category Category;
+    private Category category;
     @Column(name = "tipo_producto")
     private ProductType productType;
     @Column(name = "sexo")
@@ -56,6 +56,11 @@ public class Product extends Base {
     @Column(name = "descripcion")
     private String description;
 
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
+
     @Column(name = "activo")
-    private Boolean active =true;
+    private Boolean active = true;
 }
