@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -25,6 +26,16 @@ public class User extends Base {
     private String email;
     @Column(name = "dni")
     private String dni;
+    @Column(name = "nombre_usuario")
+    private String username;
+    @Column(name = "fecha_nacimiento")
+    private Date birthdate;
+    @Column(name = "apellido")
+    private String lastname;
+    @Column(name = "numero_telefonico")
+    private Integer phoneNumber;
+    @Column (name = "sexo")
+    private String sex;
 
 
     @ManyToOne
