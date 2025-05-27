@@ -34,6 +34,8 @@ public class User extends Base {
     private String lastname;
     @Column(name = "numero_telefonico")
     private Integer phoneNumber;
+    @Column (name = "sexo")
+    private String sex;
 
 
     @ManyToOne
