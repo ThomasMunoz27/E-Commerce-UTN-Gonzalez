@@ -14,7 +14,7 @@ import java.util.List;
 @Setter
 @Getter
 public class User extends Base {
-
+//comentario para mergin
     @Column(name = "nombre")
     private String name ;
     @Column(name = "constraseña")
