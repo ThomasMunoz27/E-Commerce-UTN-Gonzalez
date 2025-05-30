@@ -51,9 +51,7 @@ public class ProductService extends BaseService<Product>{
         return productRepository.findAll(pageable);
     }
 
-    public List<Product> buscarPorCategoria(String categoria){
-        return productRepository.findAllByCategoria(categoria);
-    }
+
 
     public Page<Product> findPagedAndFiltered(Long categoryId, Pageable pageable) {
         if (categoryId != null) {
@@ -61,5 +59,7 @@ public class ProductService extends BaseService<Product>{
         }
         return productRepository.findAll(pageable);
     }
+
+
 
 }

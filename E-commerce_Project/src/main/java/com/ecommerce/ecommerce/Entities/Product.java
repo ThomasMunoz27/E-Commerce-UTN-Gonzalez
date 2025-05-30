@@ -27,7 +27,7 @@ public class Product extends Base {
     )
     private List<Category> category;
 
-
+    @Enumerated(EnumType.STRING)
     @Column(name = "tipo_producto")
     private ProductType productType;
     @Column(name = "sexo")

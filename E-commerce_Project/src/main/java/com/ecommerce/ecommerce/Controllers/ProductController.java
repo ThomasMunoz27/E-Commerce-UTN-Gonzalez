@@ -40,15 +40,4 @@ public class ProductController extends BaseController<Product> {
             return productService.findAllPaged(pageable); // sin filtro
         } else {
             return productService.findPagedAndFiltered(categoryId, pageable); // con filtro
-        }
-    }
-
-
-    @GetMapping("/filter")
-    public List<Product> getFiltredProducts(
-            @RequestParam(required = false) String categoria
-    ){
-        return productService.buscarPorCategoria(categoria);
-    }
-
-}
+        }}}
