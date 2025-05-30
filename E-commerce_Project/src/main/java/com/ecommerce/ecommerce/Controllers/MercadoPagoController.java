@@ -10,10 +10,7 @@ import com.mercadopago.resources.preference.Preference;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -22,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@CrossOrigin("*")
 @RequestMapping("/api/payments")
 public class MercadoPagoController {
 
@@ -37,9 +35,9 @@ public class MercadoPagoController {
             PreferenceBackUrlsRequest backUrls =
 
                     PreferenceBackUrlsRequest.builder()
-                            .success("https://www.seu-site/success")
+                            .success("https://localhost:5173/success")
                             .pending("https://www.seu-site/pending")
-                            .failure("https://www.seu-site/failure")
+                            .failure("https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley")
                             .build();
 
 
@@ -58,7 +56,7 @@ public class MercadoPagoController {
                         .pictureUrl(cartItem.getImageUrl())
                         .quantity(cartItem.getQuantity())
                         .unitPrice(BigDecimal.valueOf(cartItem.getPrice()).setScale(2, RoundingMode.HALF_UP))
-                        //.categoryId(cartItem.getCategory()) // comentá esta línea por ahora
+                        .categoryId(cartItem.getCategory()) // comentá esta línea por ahora
                         .currencyId("ARS")
                         .build();
                 items.add(itemRequest);

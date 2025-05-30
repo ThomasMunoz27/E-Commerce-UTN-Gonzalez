@@ -1,10 +1,13 @@
 package com.ecommerce.ecommerce.Entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.List;
+
 @Entity
 @Table(name = "Factura")
 @Setter
@@ -30,4 +33,7 @@ public class Bill extends Base{
     @Column(name = "direccion_comprador")
     private String buyerAddress;
 
+    @OneToMany(mappedBy = "bill", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<BillDetail> details;
 }
