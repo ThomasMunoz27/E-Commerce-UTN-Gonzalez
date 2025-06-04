@@ -14,4 +14,7 @@ public interface UserRepository extends BaseRepository<User, Long> {
     @Query("SELECT u FROM User u WHERE u.active = true")
     List<User> findAllActive();
 
+    @Query("SELECT u FROM User u WHERE u.active = false")
+    List<User> findAllInactive();
+
 }
