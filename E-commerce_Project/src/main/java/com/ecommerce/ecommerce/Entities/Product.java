@@ -18,9 +18,16 @@ public class Product extends Base {
     @Column(name = "nombre")
     private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "categoria_id")
-    private Category category;
+    // Para que un producto tenga varias categorias
+    @ManyToMany
+    @JoinTable(
+            name = "producto_categoria",
+            joinColumns = @JoinColumn(name = "id_producto"),
+            inverseJoinColumns = @JoinColumn(name = "id_categoria")
+    )
+    private List<Category> category;
+
+    @Enumerated(EnumType.STRING)
     @Column(name = "tipo_producto")
     private ProductType productType;
     @Column(name = "sexo")
