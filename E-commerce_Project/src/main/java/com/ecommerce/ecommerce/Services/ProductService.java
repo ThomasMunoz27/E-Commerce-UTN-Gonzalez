@@ -47,6 +47,15 @@ public class ProductService extends BaseService<Product>{
             throw new Exception(e.getMessage());
         }
     }
+
+    public List<Product> findAllInactive() throws Exception {
+        try{
+            return productRepository.findAllInactive();
+        }catch(Exception e){
+            throw new Exception(e.getMessage());
+        }
+    }
+
     public Page<Product> findAllPaged(Pageable pageable) {
         return productRepository.findAll(pageable);
     }
