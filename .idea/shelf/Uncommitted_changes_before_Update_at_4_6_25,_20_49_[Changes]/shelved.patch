@@ -1,0 +1,197 @@
+Index: E-commerce_Project/src/main/java/com/ecommerce/ecommerce/Controllers/ProductController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.ecommerce.ecommerce.Controllers;\n\nimport com.ecommerce.ecommerce.Entities.Product;\nimport com.ecommerce.ecommerce.Services.ProductService;\nimport org.springframework.data.domain.Page;\nimport org.springframework.data.domain.PageRequest;\nimport org.springframework.data.domain.Pageable;\nimport org.springframework.data.domain.Sort;\nimport org.springframework.http.ResponseEntity;\nimport org.springframework.web.bind.annotation.*;\n\nimport java.util.List;\n\n\n@RestController\n@CrossOrigin(\"*\")\n@RequestMapping(\"/api/product\")\npublic class ProductController extends BaseController<Product> {\n    private final ProductService productService;\n    public ProductController(ProductService productService) {\n        super(productService);\n        this.productService = productService;\n    }\n\n    @GetMapping(\"/active\")\n    public ResponseEntity<List<Product>> getAllActive() throws Exception{\n        return ResponseEntity.ok(productService.findAllActive());\n    }\n\n    @GetMapping(\"/paged\")\n    public Page<Product> getPagedProducts(\n            @RequestParam(defaultValue = \"0\") int page,\n            @RequestParam(defaultValue = \"10\") int size,\n            @RequestParam(required = false) Long categoryId,\n            @RequestParam(defaultValue = \"id\") String sortBy\n    ) {\n        Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy).ascending());\n\n        if (categoryId == null) {\n            return productService.findAllPaged(pageable); // sin filtro\n        } else {\n            return productService.findPagedAndFiltered(categoryId, pageable); // con filtro\n        }}}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/E-commerce_Project/src/main/java/com/ecommerce/ecommerce/Controllers/ProductController.java b/E-commerce_Project/src/main/java/com/ecommerce/ecommerce/Controllers/ProductController.java
+--- a/E-commerce_Project/src/main/java/com/ecommerce/ecommerce/Controllers/ProductController.java	(revision 39f932922fdce3b1be443ede303503b560180097)
++++ b/E-commerce_Project/src/main/java/com/ecommerce/ecommerce/Controllers/ProductController.java	(date 1749080908605)
+@@ -27,6 +27,11 @@
+         return ResponseEntity.ok(productService.findAllActive());
+     }
+ 
++    @GetMapping("/inactive")
++    public ResponseEntity<List<Product>> getAllInactive() throws Exception{
++        return ResponseEntity.ok(productService.findAllInactive());
++    }
++
+     @GetMapping("/paged")
+     public Page<Product> getPagedProducts(
+             @RequestParam(defaultValue = "0") int page,
+Index: E-commerce_Project/src/main/java/com/ecommerce/ecommerce/Repositories/ProductRepository.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.ecommerce.ecommerce.Repositories;\n\nimport com.ecommerce.ecommerce.Entities.Product;\nimport org.springframework.data.domain.Page;\nimport org.springframework.data.domain.Pageable;\nimport org.springframework.data.jpa.repository.Query;\nimport org.springframework.data.repository.query.Param;\nimport org.springframework.stereotype.Repository;\n\nimport java.util.List;\n\n@Repository\npublic interface ProductRepository extends BaseRepository<Product, Long>{\n\n    @Query(\"SELECT p FROM Product p WHERE p.active = true\")\n    List<Product> findAllActive();\n\n    @Query(\"\"\"\nSELECT DISTINCT p FROM Product p\nJOIN p.category c\nWHERE p.active = true\nAND (:categoriaId IS NULL OR c.id = :categoriaId)\n\"\"\")\n    Page<Product> findPagedByCategoriaId(@Param(\"categoriaId\") Long categoriaId, Pageable pageable);\n\n\n    Page<Product> findByCategoryId(Long categoryId, Pageable pageable);\n\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/E-commerce_Project/src/main/java/com/ecommerce/ecommerce/Repositories/ProductRepository.java b/E-commerce_Project/src/main/java/com/ecommerce/ecommerce/Repositories/ProductRepository.java
+--- a/E-commerce_Project/src/main/java/com/ecommerce/ecommerce/Repositories/ProductRepository.java	(revision 39f932922fdce3b1be443ede303503b560180097)
++++ b/E-commerce_Project/src/main/java/com/ecommerce/ecommerce/Repositories/ProductRepository.java	(date 1749080908605)
+@@ -15,6 +15,9 @@
+     @Query("SELECT p FROM Product p WHERE p.active = true")
+     List<Product> findAllActive();
+ 
++    @Query("SELECT p FROM Product p WHERE p.active = false")
++    List<Product> findAllInactive();
++
+     @Query("""
+ SELECT DISTINCT p FROM Product p
+ JOIN p.category c
+Index: E-commerce_Project/src/main/java/com/ecommerce/ecommerce/Services/ProductService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.ecommerce.ecommerce.Services;\n\nimport com.ecommerce.ecommerce.Entities.Product;\nimport com.ecommerce.ecommerce.Repositories.ProductRepository;\nimport jakarta.transaction.Transactional;\nimport org.springframework.beans.factory.annotation.Autowired;\nimport org.springframework.data.domain.Page;\nimport org.springframework.data.domain.Pageable;\nimport org.springframework.data.jpa.repository.JpaRepository;\nimport org.springframework.stereotype.Service;\n\nimport java.util.List;\nimport java.util.Optional;\n\n@Service\npublic class ProductService extends BaseService<Product>{\n\n    @Autowired\n    private ProductRepository productRepository;\n\n\n    public ProductService(JpaRepository<Product, Long> baseRepository) {\n        super(baseRepository);\n    }\n\n    @Override\n    @Transactional\n    public boolean delete(Long id) throws Exception {\n        try {\n            Optional<Product> optional = productRepository.findById(id);\n            if (optional.isPresent()) {\n                Product product = optional.get();\n                product.setActive(false);\n                productRepository.save(product);\n                return true;\n            }\n            return false;\n        } catch (Exception e) {\n            throw new Exception(e.getMessage());\n        }\n    }\n\n    public List<Product> findAllActive() throws Exception {\n        try {\n            return productRepository.findAllActive();\n        } catch (Exception e) {\n            throw new Exception(e.getMessage());\n        }\n    }\n    public Page<Product> findAllPaged(Pageable pageable) {\n        return productRepository.findAll(pageable);\n    }\n\n\n\n    public Page<Product> findPagedAndFiltered(Long categoryId, Pageable pageable) {\n        if (categoryId != null) {\n            return productRepository.findByCategoryId(categoryId, pageable);\n        }\n        return productRepository.findAll(pageable);\n    }\n\n\n\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/E-commerce_Project/src/main/java/com/ecommerce/ecommerce/Services/ProductService.java b/E-commerce_Project/src/main/java/com/ecommerce/ecommerce/Services/ProductService.java
+--- a/E-commerce_Project/src/main/java/com/ecommerce/ecommerce/Services/ProductService.java	(revision 39f932922fdce3b1be443ede303503b560180097)
++++ b/E-commerce_Project/src/main/java/com/ecommerce/ecommerce/Services/ProductService.java	(date 1749080908606)
+@@ -47,6 +47,15 @@
+             throw new Exception(e.getMessage());
+         }
+     }
++
++    public List<Product> findAllInactive() throws Exception {
++        try{
++            return productRepository.findAllInactive();
++        }catch(Exception e){
++            throw new Exception(e.getMessage());
++        }
++    }
++
+     public Page<Product> findAllPaged(Pageable pageable) {
+         return productRepository.findAll(pageable);
+     }
+Index: E-commerce_Project/src/main/java/com/ecommerce/ecommerce/Entities/User.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.ecommerce.ecommerce.Entities;\n\nimport com.ecommerce.ecommerce.Entities.enums.Rol;\nimport jakarta.persistence.*;\nimport lombok.Getter;\nimport lombok.Setter;\n\nimport java.util.ArrayList;\nimport java.util.Date;\nimport java.util.List;\n\n\n@Entity\n@Table(name = \"Usuarios\")\n@Setter\n@Getter\npublic class User extends Base {\n//comentario para mergin\n    @Column(name = \"nombre\")\n    private String name ;\n    @Column(name = \"constraseña\")\n    private String password;\n    @Column(name = \"usuario\")\n    private Rol user;\n    @Column(name = \"email\")\n    private String email;\n    @Column(name = \"dni\")\n    private String dni;\n    @Column(name = \"nombre_usuario\")\n    private String username;\n    @Column(name = \"fecha_nacimiento\")\n    private Date birthdate;\n    @Column(name = \"apellido\")\n    private String lastname;\n    @Column(name = \"numero_telefonico\")\n    private Integer phoneNumber;\n    @Column (name = \"sexo\")\n    private String sex;\n\n\n    @ManyToOne\n    @JoinColumn(name = \"direccion_id\")\n    private Adress adress;\n\n    @ManyToOne\n    @JoinColumn(name = \"talla_id\")\n    private Size size;\n\n    @Column(name = \"activo\")\n    private Boolean active = true;\n\n\n    public String getName() {\n        return name;\n    }\n\n    public void setName(String name) {\n        this.name = name;\n    }\n\n    public String getPassword() {\n        return password;\n    }\n\n    public void setPassword(String password) {\n        this.password = password;\n    }\n\n    public Rol getUser() {\n        return user;\n    }\n\n    public void setUser(Rol user) {\n        this.user = user;\n    }\n\n    public String getEmail() {\n        return email;\n    }\n\n    public void setEmail(String email) {\n        this.email = email;\n    }\n\n    public String getDni() {\n        return dni;\n    }\n\n    public void setDni(String dni) {\n        this.dni = dni;\n    }\n\n    public Adress getAdress() {\n        return adress;\n    }\n\n    public void setAdress(Adress adress) {\n        this.adress = adress;\n    }\n\n    public Size getSize() {\n        return size;\n    }\n\n    public void setActive(Boolean active) {\n        this.active = active;\n    }\n\n\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/E-commerce_Project/src/main/java/com/ecommerce/ecommerce/Entities/User.java b/E-commerce_Project/src/main/java/com/ecommerce/ecommerce/Entities/User.java
+--- a/E-commerce_Project/src/main/java/com/ecommerce/ecommerce/Entities/User.java	(revision 39f932922fdce3b1be443ede303503b560180097)
++++ b/E-commerce_Project/src/main/java/com/ecommerce/ecommerce/Entities/User.java	(date 1749080908605)
+@@ -102,6 +102,14 @@
+         return size;
+     }
+ 
++    public void setSize(Size size) {
++        this.size = size;
++    }
++
++    public Boolean getActive() {
++        return active;
++    }
++
+     public void setActive(Boolean active) {
+         this.active = active;
+     }
+Index: E-commerce_Project/src/main/resources/application.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+># Configuración de la base de datos MySQL\nspring.datasource.url=jdbc:mysql://localhost:3306/E-Commerce?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC\nspring.datasource.username=admin\nspring.datasource.password=1234\n\n# Configuración de JPA/Hibernate\nspring.jpa.show-sql=true \nspring.jpa.hibernate.ddl-auto=update\nspring.jpa.database-platform=org.hibernate.dialect.MySQLDialect\n\n# Configuración del servidor\nserver.port=9000\n\n#Token MercadoPago\nMERCADOPAGO_ACCESS_TOKEN=APP_USR-7189223713985253-052311-7c0b5d6f37f09e238dae97b858850a62-2453207587
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>ISO-8859-1
+===================================================================
+diff --git a/E-commerce_Project/src/main/resources/application.properties b/E-commerce_Project/src/main/resources/application.properties
+--- a/E-commerce_Project/src/main/resources/application.properties	(revision 39f932922fdce3b1be443ede303503b560180097)
++++ b/E-commerce_Project/src/main/resources/application.properties	(date 1749080908607)
+@@ -1,5 +1,5 @@
+ # Configuración de la base de datos MySQL
+-spring.datasource.url=jdbc:mysql://localhost:3306/E-Commerce?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
++spring.datasource.url=jdbc:mysql://localhost:3307/E-Commerce?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+ spring.datasource.username=admin
+ spring.datasource.password=1234
+ 
+Index: E-commerce_Project/src/main/java/com/ecommerce/ecommerce/Services/UserService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.ecommerce.ecommerce.Services;\n\nimport com.ecommerce.ecommerce.Entities.Adress;\nimport com.ecommerce.ecommerce.Entities.Size;\nimport com.ecommerce.ecommerce.Entities.User;\nimport com.ecommerce.ecommerce.Repositories.AdressRepository;\nimport com.ecommerce.ecommerce.Repositories.SizeRepository;\nimport com.ecommerce.ecommerce.Repositories.UserRepository;\nimport com.ecommerce.ecommerce.payload.RegisterRequest;\nimport jakarta.transaction.Transactional;\nimport org.springframework.beans.factory.annotation.Autowired;\nimport org.springframework.data.jpa.repository.JpaRepository;\nimport org.springframework.security.crypto.password.PasswordEncoder;\nimport org.springframework.stereotype.Service;\n\nimport java.util.List;\nimport java.util.Optional;\n\n@Service\npublic class UserService extends BaseService<User>{\n    @Autowired\n    private UserRepository userRepository;\n\n\n\n    @Autowired\n    private AdressRepository adressRepository;\n\n    @Autowired\n    private SizeRepository sizeRepository;\n\n    @Autowired\n    private PasswordEncoder passwordEncoder;\n\n    public UserService(JpaRepository<User, Long> baseRepository) {\n        super(baseRepository);\n    }\n\n    public List<User> findByName(String userName){\n        return userRepository.findByName(userName);\n    }\n\n    public void registerUser(RegisterRequest request) {\n        User user = new User();\n        user.setName(request.getName());\n        user.setPassword(passwordEncoder.encode(request.getPassword()));\n        user.setUser(request.getUser());\n        user.setEmail(request.getEmail());\n        user.setDni(request.getDni());\n\n        // Relacionar con entidades si existen\n        Adress adress = adressRepository.findById(request.getAdressId()).orElse(null);\n        Size size = sizeRepository.findById(request.getSizeId()).orElse(null);\n\n        user.setAdress(adress);\n\n        userRepository.save(user);\n    }\n\n    @Override\n    @Transactional\n    public boolean delete(Long id) throws Exception{\n        try{\n            Optional<User> optional = userRepository.findById(id);\n            if (optional.isPresent()){\n                User user = optional.get();\n                user.setActive(false);\n                userRepository.save(user);\n                return true;\n            }\n            return false;\n        }catch (Exception e){\n            throw new Exception(e.getMessage());\n        }\n    }\n\n    public List<User> findAllActive() throws Exception{\n        try{\n            return userRepository.findAllActive();\n        }catch (Exception e){\n            throw new Exception(e.getMessage());\n        }\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/E-commerce_Project/src/main/java/com/ecommerce/ecommerce/Services/UserService.java b/E-commerce_Project/src/main/java/com/ecommerce/ecommerce/Services/UserService.java
+--- a/E-commerce_Project/src/main/java/com/ecommerce/ecommerce/Services/UserService.java	(revision 39f932922fdce3b1be443ede303503b560180097)
++++ b/E-commerce_Project/src/main/java/com/ecommerce/ecommerce/Services/UserService.java	(date 1749080908607)
+@@ -81,4 +81,12 @@
+             throw new Exception(e.getMessage());
+         }
+     }
++
++    public List<User> findAllInactive() throws Exception{
++        try {
++            return userRepository.findAllInactive();
++        }catch (Exception e){
++            throw new Exception(e.getMessage());
++        }
++    }
+ }
+Index: E-commerce_Project/src/main/java/com/ecommerce/ecommerce/Repositories/UserRepository.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.ecommerce.ecommerce.Repositories;\n\nimport com.ecommerce.ecommerce.Entities.User;\nimport org.springframework.data.jpa.repository.Query;\nimport org.springframework.stereotype.Repository;\n\nimport java.util.List;\n\n@Repository\npublic interface UserRepository extends BaseRepository<User, Long> {\n\n    List<User> findByName(String name);\n\n    @Query(\"SELECT u FROM User u WHERE u.active = true\")\n    List<User> findAllActive();\n\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/E-commerce_Project/src/main/java/com/ecommerce/ecommerce/Repositories/UserRepository.java b/E-commerce_Project/src/main/java/com/ecommerce/ecommerce/Repositories/UserRepository.java
+--- a/E-commerce_Project/src/main/java/com/ecommerce/ecommerce/Repositories/UserRepository.java	(revision 39f932922fdce3b1be443ede303503b560180097)
++++ b/E-commerce_Project/src/main/java/com/ecommerce/ecommerce/Repositories/UserRepository.java	(date 1749080908606)
+@@ -14,4 +14,7 @@
+     @Query("SELECT u FROM User u WHERE u.active = true")
+     List<User> findAllActive();
+ 
++    @Query("SELECT u FROM User u WHERE u.active = false")
++    List<User> findAllInactive();
++
+ }
+\ No newline at end of file
+Index: E-commerce_Project/src/main/java/com/ecommerce/ecommerce/Controllers/UserController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.ecommerce.ecommerce.Controllers;\n\nimport com.ecommerce.ecommerce.Entities.User;\nimport com.ecommerce.ecommerce.Services.BaseService;\nimport com.ecommerce.ecommerce.Services.UserService;\nimport org.springframework.http.ResponseEntity;\nimport org.springframework.web.bind.annotation.*;\n\nimport java.util.List;\n\n@RestController\n@CrossOrigin(\"*\")\n@RequestMapping(\"/api/user\")\npublic class UserController extends BaseController<User>{\n\n    private UserService userService;\n\n    public UserController(UserService userService) {\n        super(userService);\n    }\n\n    @GetMapping(\"/search\")\n    public List<User> searchByName(@RequestParam String userName){\n        return userService.findByName(userName);\n    }\n\n    public ResponseEntity<List<User>> getAllActive() throws Exception{\n        return ResponseEntity.ok(userService.findAllActive());\n    }\n\n    @GetMapping(\"/active\")\n    public ResponseEntity<List<User>> getAllActives() throws Exception{\n        return ResponseEntity.ok(userService.findAllActive());\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/E-commerce_Project/src/main/java/com/ecommerce/ecommerce/Controllers/UserController.java b/E-commerce_Project/src/main/java/com/ecommerce/ecommerce/Controllers/UserController.java
+--- a/E-commerce_Project/src/main/java/com/ecommerce/ecommerce/Controllers/UserController.java	(revision 39f932922fdce3b1be443ede303503b560180097)
++++ b/E-commerce_Project/src/main/java/com/ecommerce/ecommerce/Controllers/UserController.java	(date 1749080908605)
+@@ -3,6 +3,7 @@
+ import com.ecommerce.ecommerce.Entities.User;
+ import com.ecommerce.ecommerce.Services.BaseService;
+ import com.ecommerce.ecommerce.Services.UserService;
++import org.springframework.beans.factory.annotation.Autowired;
+ import org.springframework.http.ResponseEntity;
+ import org.springframework.web.bind.annotation.*;
+ 
+@@ -13,6 +14,7 @@
+ @RequestMapping("/api/user")
+ public class UserController extends BaseController<User>{
+ 
++    @Autowired
+     private UserService userService;
+ 
+     public UserController(UserService userService) {
+@@ -24,12 +26,15 @@
+         return userService.findByName(userName);
+     }
+ 
+-    public ResponseEntity<List<User>> getAllActive() throws Exception{
+-        return ResponseEntity.ok(userService.findAllActive());
+-    }
++
+ 
+     @GetMapping("/active")
+     public ResponseEntity<List<User>> getAllActives() throws Exception{
+         return ResponseEntity.ok(userService.findAllActive());
+     }
++
++    @GetMapping("/inactive")
++    public ResponseEntity<List<User>> getAllInactives() throws Exception{
++        return ResponseEntity.ok(userService.findAllInactive());
++    }
+ }

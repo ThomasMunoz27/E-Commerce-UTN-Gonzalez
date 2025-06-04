@@ -7,15 +7,13 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 
 @RestController
+@CrossOrigin("*")
 @RequestMapping("/api/product")
 public class ProductController extends BaseController<Product> {
     private final ProductService productService;
@@ -27,6 +25,11 @@ public class ProductController extends BaseController<Product> {
     @GetMapping("/active")
     public ResponseEntity<List<Product>> getAllActive() throws Exception{
         return ResponseEntity.ok(productService.findAllActive());
+    }
+
+    @GetMapping("/inactive")
+    public ResponseEntity<List<Product>> getAllInactive() throws Exception{
+        return ResponseEntity.ok(productService.findAllInactive());
     }
 
     @GetMapping("/paged")
@@ -42,15 +45,4 @@ public class ProductController extends BaseController<Product> {
             return productService.findAllPaged(pageable); // sin filtro
         } else {
             return productService.findPagedAndFiltered(categoryId, pageable); // con filtro
-        }
-    }
-
-
-    @GetMapping("/filter")
-    public List<Product> getFiltredProducts(
-            @RequestParam(required = false) String categoria
-    ){
-        return productService.buscarPorCategoria(categoria);
-    }
-
-}
+        }}}

@@ -1,0 +1,29 @@
+package com.ecommerce.ecommerce.Controllers;
+
+import com.cloudinary.Cloudinary;
+import com.ecommerce.ecommerce.Entities.Image;
+import com.ecommerce.ecommerce.Services.CloudinaryService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
+@Controller
+@RequestMapping("/api/upload")
+public class UploadController {
+    @Autowired
+    private CloudinaryService cloudinaryService;
+
+    @PostMapping
+    public ResponseEntity<?> uploadImage(@RequestParam("file") MultipartFile file){
+        try {
+            Image savedImage = cloudinaryService.uploadFile(file);
+            return ResponseEntity.ok(savedImage); // Devuelve el objeto guardado (con id y url)
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Error al subir la imagen: " + e.getMessage());
+        }
+    }
+}

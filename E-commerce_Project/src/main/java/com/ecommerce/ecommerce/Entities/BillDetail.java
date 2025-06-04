@@ -1,6 +1,8 @@
 package com.ecommerce.ecommerce.Entities;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,7 +26,11 @@ public class BillDetail extends Base{
     @Column(name = "subtotal")
     private Double subtotal;
 
+    @Column(name = "descuento")
+    private Double discount;
+
     @ManyToOne
     @JoinColumn(name = "factura_id")
+    @JsonBackReference
     private Bill bill;
 }

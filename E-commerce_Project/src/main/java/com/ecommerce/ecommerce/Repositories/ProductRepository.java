@@ -14,13 +14,18 @@ public interface ProductRepository extends BaseRepository<Product, Long>{
 
     @Query("SELECT p FROM Product p WHERE p.active = true")
     List<Product> findAllActive();
+    @Query("SELECT p FROM Product p WHERE p.active = false")
+    List<Product> findAllInactive();
+
 
     @Query("""
-SELECT p FROM Product p
+SELECT DISTINCT p FROM Product p
+JOIN p.category c
 WHERE p.active = true
-AND (:categoria IS NULL OR LOWER(p.category.name) LIKE LOWER(CONCAT('%', :categoria, '%')))
+AND (:categoriaId IS NULL OR c.id = :categoriaId)
 """)
-    List<Product> findAllByCategoria(@Param("categoria") String categoria);
+    Page<Product> findPagedByCategoriaId(@Param("categoriaId") Long categoriaId, Pageable pageable);
+
 
     Page<Product> findByCategoryId(Long categoryId, Pageable pageable);
 
