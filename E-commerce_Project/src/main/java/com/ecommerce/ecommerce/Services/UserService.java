@@ -81,12 +81,4 @@ public class UserService extends BaseService<User>{
             throw new Exception(e.getMessage());
         }
     }
-
-    public List<User> findAllInactive() throws Exception{
-        try {
-            return userRepository.findAllInactive();
-        }catch (Exception e){
-            throw new Exception(e.getMessage());
-        }
-    }
 }

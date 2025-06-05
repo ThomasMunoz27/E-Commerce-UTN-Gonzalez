@@ -15,9 +15,6 @@ public interface ProductRepository extends BaseRepository<Product, Long>{
     @Query("SELECT p FROM Product p WHERE p.active = true")
     List<Product> findAllActive();
 
-    @Query("SELECT p FROM Product p WHERE p.active = false")
-    List<Product> findAllInactive();
-
     @Query("""
 SELECT DISTINCT p FROM Product p
 JOIN p.category c

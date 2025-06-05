@@ -27,11 +27,6 @@ public class ProductController extends BaseController<Product> {
         return ResponseEntity.ok(productService.findAllActive());
     }
 
-    @GetMapping("/inactive")
-    public ResponseEntity<List<Product>> getAllInactive() throws Exception{
-        return ResponseEntity.ok(productService.findAllInactive());
-    }
-
     @GetMapping("/paged")
     public Page<Product> getPagedProducts(
             @RequestParam(defaultValue = "0") int page,

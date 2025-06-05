@@ -102,14 +102,6 @@ public class User extends Base {
         return size;
     }
 
-    public void setSize(Size size) {
-        this.size = size;
-    }
-
-    public Boolean getActive() {
-        return active;
-    }
-
     public void setActive(Boolean active) {
         this.active = active;
     }
