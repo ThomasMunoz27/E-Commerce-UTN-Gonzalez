@@ -16,7 +16,7 @@ public class UserController extends BaseController<User>{
     private UserService userService;
 
     public UserController(UserService userService) {
-        super(userService);
+        super(userService); this.userService = userService;
     }
 
     @GetMapping("/search")
