@@ -36,6 +36,9 @@ public class Bill extends Base{
     @Column(name = "descuento_total")
     private Double totalDiscount;
 
+    @Column(name = "preference_id")
+    private String preferenceId;
+
     @Column(name = "confirmada")
     private Double confirmed;
 
