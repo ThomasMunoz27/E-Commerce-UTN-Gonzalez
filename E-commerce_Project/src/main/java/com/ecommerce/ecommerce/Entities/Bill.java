@@ -33,6 +33,9 @@ public class Bill extends Base{
     @Column(name = "direccion_comprador")
     private String buyerAddress;
 
+    @Column(name = "descuento_total")
+    private Double totalDiscount;
+
     @OneToMany(mappedBy = "bill", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<BillDetail> details;

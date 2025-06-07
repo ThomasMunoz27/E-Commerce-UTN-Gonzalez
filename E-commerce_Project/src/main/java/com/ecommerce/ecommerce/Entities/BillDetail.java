@@ -26,6 +26,9 @@ public class BillDetail extends Base{
     @Column(name = "subtotal")
     private Double subtotal;
 
+    @Column(name = "descuento")
+    private Double discount;
+
     @ManyToOne
     @JoinColumn(name = "factura_id")
     @JsonBackReference
