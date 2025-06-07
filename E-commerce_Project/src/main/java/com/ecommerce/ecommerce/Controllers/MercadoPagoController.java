@@ -37,7 +37,7 @@ public class MercadoPagoController {
                     PreferenceBackUrlsRequest.builder()
                             .success("https://localhost:5173/success")
                             .pending("https://www.seu-site/pending")
-                            .failure("https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley")
+                            .failure("https://localhost:5173/failure")
                             .build();
 
 

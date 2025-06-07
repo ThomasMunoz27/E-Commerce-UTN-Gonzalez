@@ -40,7 +40,7 @@ public class Bill extends Base{
     private String preferenceId;
 
     @Column(name = "confirmada")
-    private Double confirmed;
+    private Boolean confirmed;
 
     @OneToMany(mappedBy = "bill", cascade = CascadeType.ALL)
     @JsonManagedReference

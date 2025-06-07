@@ -33,4 +33,18 @@ public class BillController extends BaseController<Bill>{
         Bill savedBill = billRepository.save(bill);
         return ResponseEntity.status(201).body(savedBill);
     }
+
+    @PutMapping("/confirm/{preferenceId}")
+    public ResponseEntity<?> confirmBill(@PathVariable String preferenceId){
+        Bill bill = billRepository.findByPreferenceId(preferenceId);
+
+        if (bill == null){
+            return ResponseEntity.status(404).body("Factura no encontrada");
+        }
+
+        bill.setConfirmed(true);
+        billRepository.save(bill);
+
+        return ResponseEntity.ok("Factura Confirmada");
+    }
 }
