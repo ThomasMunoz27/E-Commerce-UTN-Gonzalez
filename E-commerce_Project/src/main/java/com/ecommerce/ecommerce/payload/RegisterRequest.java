@@ -1,14 +1,20 @@
 package com.ecommerce.ecommerce.payload;
 
-
 import com.ecommerce.ecommerce.Entities.enums.Rol;
+
+import java.util.Date;
 
 public class RegisterRequest {
     private String name;
     private String password;
-    private Rol user;     // Podrías renombrar a `rol` para más claridad
+    private Rol user;
     private String email;
     private String dni;
+    private String username;
+    private Date birthdate;
+    private String lastname;
+    private Integer phoneNumber;
+    private String sex;
     private Long adressId;
     private Long sizeId;
 
@@ -54,15 +60,59 @@ public class RegisterRequest {
         this.dni = dni;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public Date getBirthdate() {
+        return birthdate;
+    }
+
+    public void setBirthdate(Date birthdate) {
+        this.birthdate = birthdate;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public Integer getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(Integer phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
     public Long getAdressId() {
         return adressId;
     }
 
-    public Long getSizeId(){
+    public void setAdressId(Long adressId) {
+        this.adressId = adressId;
+    }
+
+    public Long getSizeId() {
         return sizeId;
     }
 
-    public void setAdressId(Long adressId) {
-        this.adressId = adressId;
+    public void setSizeId(Long sizeId) {
+        this.sizeId = sizeId;
     }
 }

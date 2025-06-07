@@ -17,11 +17,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserService extends BaseService<User>{
+public class UserService extends BaseService<User> {
+
     @Autowired
     private UserRepository userRepository;
-
-
 
     @Autowired
     private AdressRepository adressRepository;
@@ -36,7 +35,7 @@ public class UserService extends BaseService<User>{
         super(baseRepository);
     }
 
-    public List<User> findByName(String userName){
+    public List<User> findByName(String userName) {
         return userRepository.findByName(userName);
     }
 
@@ -47,44 +46,51 @@ public class UserService extends BaseService<User>{
         user.setUser(request.getUser());
         user.setEmail(request.getEmail());
         user.setDni(request.getDni());
+        user.setUsername(request.getUsername());
+        user.setBirthdate(request.getBirthdate());
+        user.setLastname(request.getLastname());
+        user.setPhoneNumber(request.getPhoneNumber());
+        user.setSex(request.getSex());
 
-        // Relacionar con entidades si existen
+        // Relaciones con Address y Size
         Adress adress = adressRepository.findById(request.getAdressId()).orElse(null);
         Size size = sizeRepository.findById(request.getSizeId()).orElse(null);
 
         user.setAdress(adress);
+        user.setSize(size); // <- Faltaba esto
 
         userRepository.save(user);
     }
 
     @Override
     @Transactional
-    public boolean delete(Long id) throws Exception{
-        try{
+    public boolean delete(Long id) throws Exception {
+        try {
             Optional<User> optional = userRepository.findById(id);
-            if (optional.isPresent()){
+            if (optional.isPresent()) {
                 User user = optional.get();
                 user.setActive(false);
                 userRepository.save(user);
                 return true;
             }
             return false;
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new Exception(e.getMessage());
         }
     }
 
-    public List<User> findAllActive() throws Exception{
-        try{
+    public List<User> findAllActive() throws Exception {
+        try {
             return userRepository.findAllActive();
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new Exception(e.getMessage());
         }
     }
-    public List<User> findAllInactive() throws Exception{
-        try{
+
+    public List<User> findAllInactive() throws Exception {
+        try {
             return userRepository.findAllInactive();
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new Exception(e.getMessage());
         }
     }

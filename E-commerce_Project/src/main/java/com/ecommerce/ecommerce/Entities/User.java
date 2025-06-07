@@ -5,38 +5,42 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-
 
 @Entity
 @Table(name = "Usuarios")
-@Setter
-@Getter
 public class User extends Base {
-//comentario para mergin
+
     @Column(name = "nombre")
-    private String name ;
-    @Column(name = "constraseña")
+    private String name;
+
+    @Column(name = "password")
     private String password;
+
+    @Enumerated(EnumType.ORDINAL)
     @Column(name = "usuario")
     private Rol user;
+
     @Column(name = "email")
     private String email;
+
     @Column(name = "dni")
     private String dni;
+
     @Column(name = "nombre_usuario")
     private String username;
+
     @Column(name = "fecha_nacimiento")
     private Date birthdate;
+
     @Column(name = "apellido")
     private String lastname;
+
     @Column(name = "numero_telefonico")
     private Integer phoneNumber;
-    @Column (name = "sexo")
-    private String sex;
 
+    @Column(name = "sexo")
+    private String sex;
 
     @ManyToOne
     @JoinColumn(name = "direccion_id")
@@ -49,7 +53,7 @@ public class User extends Base {
     @Column(name = "activo")
     private Boolean active = true;
 
-
+    // Getters y Setters
     public String getName() {
         return name;
     }
@@ -90,6 +94,46 @@ public class User extends Base {
         this.dni = dni;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public Date getBirthdate() {
+        return birthdate;
+    }
+
+    public void setBirthdate(Date birthdate) {
+        this.birthdate = birthdate;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public Integer getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(Integer phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
     public Adress getAdress() {
         return adress;
     }
@@ -102,9 +146,15 @@ public class User extends Base {
         return size;
     }
 
+    public void setSize(Size size) {
+        this.size = size;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
     public void setActive(Boolean active) {
         this.active = active;
     }
-
-
 }
