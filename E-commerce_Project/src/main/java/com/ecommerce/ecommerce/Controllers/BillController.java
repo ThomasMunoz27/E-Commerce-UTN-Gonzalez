@@ -47,4 +47,13 @@ public class BillController extends BaseController<Bill>{
 
         return ResponseEntity.ok("Factura Confirmada");
     }
+
+    @GetMapping("/confirm/{preferenceId}")
+    public ResponseEntity<Bill> getBillByPreferenceId(@PathVariable String preferenceId){
+        Bill bill = billRepository.findByPreferenceId(preferenceId);
+        if (bill == null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(bill);
+    }
 }
