@@ -38,8 +38,9 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .cors(cors->{})
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/login").permitAll() // Solo permite login sin token
-                        .anyRequest().permitAll() // El resto necesita JWT
+                        .requestMatchers("/auth/login").permitAll() // Permite login sin token
+                        .requestMatchers("/auth/register").permitAll() // Permite register sin token
+                        .anyRequest().authenticated() // El resto necesita JWT
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())
