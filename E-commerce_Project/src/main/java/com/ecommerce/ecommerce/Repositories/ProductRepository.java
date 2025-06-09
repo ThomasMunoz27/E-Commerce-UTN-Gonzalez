@@ -29,4 +29,6 @@ AND (:categoriaId IS NULL OR c.id = :categoriaId)
 
     Page<Product> findByCategoryId(Long categoryId, Pageable pageable);
 
+
+
 }
