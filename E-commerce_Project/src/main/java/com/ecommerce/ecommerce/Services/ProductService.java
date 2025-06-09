@@ -40,6 +40,24 @@ public class ProductService extends BaseService<Product>{
         }
     }
 
+
+    @Transactional
+    public boolean patch(Long id) throws Exception {
+        try {
+            Optional<Product> optional = productRepository.findById(id);
+            if (optional.isPresent()) {
+                Product product = optional.get();
+                product.setActive(true);
+                productRepository.save(product);
+                return true;
+            }
+            return false;
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+    }
+
+
     public List<Product> findAllActive() throws Exception {
         try {
             return productRepository.findAllActive();

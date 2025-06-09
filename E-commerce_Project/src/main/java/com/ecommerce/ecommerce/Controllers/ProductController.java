@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,4 +46,19 @@ public class ProductController extends BaseController<Product> {
             return productService.findAllPaged(pageable); // sin filtro
         } else {
             return productService.findPagedAndFiltered(categoryId, pageable); // con filtro
-        }}}
+        }}
+    @PatchMapping("/activate/{id}")
+    public ResponseEntity<?> activateProduct(@PathVariable Long id) {
+        try {
+            boolean updated = productService.patch(id);
+            if (updated) {
+                return ResponseEntity.ok("Producto activado correctamente.");
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Producto no encontrado.");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error: " + e.getMessage());
+        }
+    }
+}
+
