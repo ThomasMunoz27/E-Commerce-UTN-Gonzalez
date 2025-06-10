@@ -35,8 +35,8 @@ public class UserService extends BaseService<User> {
         super(baseRepository);
     }
 
-    public List<User> findByName(String userName) {
-        return userRepository.findByName(userName);
+    public Optional<User> findByName(String userName) {
+        return userRepository.findByUsername(userName);
     }
 
     public void registerUser(RegisterRequest request) {
