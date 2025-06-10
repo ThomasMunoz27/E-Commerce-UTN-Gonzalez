@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin("*")
@@ -21,9 +22,10 @@ public class UserController extends BaseController<User>{
     }
 
     @GetMapping("/search")
-    public List<User> searchByName(@RequestParam String userName){
+    public Optional<User> searchByName(@RequestParam String userName){
         return userService.findByName(userName);
     }
+
 
     public ResponseEntity<List<User>> getAllActive() throws Exception{
         return ResponseEntity.ok(userService.findAllActive());
