@@ -25,4 +25,15 @@ public class UploadController {
             return ResponseEntity.status(500).body("Error al subir la imagen: " + e.getMessage());
         }
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateImage(@PathVariable Long id, @RequestParam("file") MultipartFile file) {
+        try {
+            Image updatedImage = cloudinaryService.updateImage(id, file);
+            return ResponseEntity.ok(updatedImage);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Error al actualizar la imagen: " + e.getMessage());
+        }
+    }
+
 }
