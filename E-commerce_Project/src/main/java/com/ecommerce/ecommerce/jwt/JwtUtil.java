@@ -13,12 +13,12 @@ import java.util.Date;
 public class JwtUtil {
 
     private static final String SECRET = "mi3super3clave3secreta3segura31234567890123456";
-
+    private final long EXPIRATION_TIME = 1000 * 60 * 60 * 24 * 7; // 7 días en milisegundos
     public String generateToken(String username) {
         return Jwts.builder()
                 .setSubject(username)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + 3600000))
+                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(SignatureAlgorithm.HS256, SECRET)
                 .compact();
     }
