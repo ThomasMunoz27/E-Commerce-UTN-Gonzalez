@@ -88,7 +88,7 @@ public class RegisterRequest {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(String Long) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 

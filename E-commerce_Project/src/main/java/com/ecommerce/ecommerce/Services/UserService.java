@@ -52,9 +52,16 @@ public class UserService extends BaseService<User> {
         user.setPhoneNumber(request.getPhoneNumber());
         user.setSex(request.getSex());
 
-        // Relaciones con Address y Size
-        Optional<Adress> adress = adressRepository.findById(request.getAdressId());
-        Optional<Size> size = sizeRepository.findById(request.getSizeId());
+        // Buscar entidades relacionadas por ID
+        Adress adress = adressRepository.findById(request.getAdressId())
+                .orElseThrow(() -> new RuntimeException("Dirección no encontrada con ID: " + request.getAdressId()));
+
+        Size size = sizeRepository.findById(request.getSizeId())
+                .orElseThrow(() -> new RuntimeException("Talla no encontrada con ID: " + request.getSizeId()));
+
+        // Asignar al usuario
+        user.setAdress(adress);
+        user.setSize(size);
 
         userRepository.save(user);
     }
