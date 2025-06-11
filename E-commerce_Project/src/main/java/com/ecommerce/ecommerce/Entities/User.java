@@ -37,7 +37,7 @@ public class User extends Base {
     private String lastname;
 
     @Column(name = "numero_telefonico")
-    private Long phoneNumber;
+    private String phoneNumber;
 
     @Column(name = "sexo")
     private String sex;
@@ -118,11 +118,11 @@ public class User extends Base {
         this.lastname = lastname;
     }
 
-    public Long getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(Long phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 

@@ -53,11 +53,8 @@ public class UserService extends BaseService<User> {
         user.setSex(request.getSex());
 
         // Relaciones con Address y Size
-        Adress adress = adressRepository.findById(request.getAdressId()).orElse(null);
-        Size size = sizeRepository.findById(request.getSizeId()).orElse(null);
-
-        user.setAdress(adress);
-        user.setSize(size); // <- Faltaba esto
+        Optional<Adress> adress = adressRepository.findById(request.getAdressId());
+        Optional<Size> size = sizeRepository.findById(request.getSizeId());
 
         userRepository.save(user);
     }

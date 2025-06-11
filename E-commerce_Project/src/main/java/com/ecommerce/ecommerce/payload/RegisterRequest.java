@@ -13,7 +13,7 @@ public class RegisterRequest {
     private String username;
     private Date birthdate;
     private String lastname;
-    private Long phoneNumber;
+    private String phoneNumber;
     private String sex;
     private Long adressId;
     private Long sizeId;
@@ -84,7 +84,7 @@ public class RegisterRequest {
         this.lastname = lastname;
     }
 
-    public Long getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 

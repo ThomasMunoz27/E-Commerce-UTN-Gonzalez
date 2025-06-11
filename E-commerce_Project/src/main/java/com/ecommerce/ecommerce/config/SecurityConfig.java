@@ -40,6 +40,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/login").permitAll() // Permite login sin token
                         .requestMatchers("/auth/register").permitAll() // Permite register sin token
+                        .requestMatchers("/api/locality").permitAll()
                         .anyRequest().authenticated() // El resto necesita JWT
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
